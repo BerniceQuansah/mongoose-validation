@@ -1,10 +1,21 @@
 const express = require("express");
-const postsRouter = require("./modules/posts/post.route");
+const {postRouter} = require("./modules/posts/post.route");
 const {dbConnect} = require("./config/dbConnect");
+const {authRouter} = require("./modules/users/auth.route");
 
 const app = express();
+
 app.use(express.json());
-app.use("/posts", postsRouter);
+
+app.get("/",  (req, res) => {
+    res
+    .status(200)
+    .send("welcome to my shop api. use /products to get all products");
+});
+
+app.use("/auth", authRouter);
+
+app.use("/posts", postRouter);
 
 
 async function start() {
